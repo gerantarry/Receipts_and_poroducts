@@ -13,8 +13,8 @@ class MyView : View() {
 }
 
 class TopView : View() {
-    val controller: MyController by inject()
-    val input = SimpleStringProperty()
+    private val controller: MyController by inject()
+    private val input = SimpleStringProperty()
 
     override val root = form {
         fieldset {

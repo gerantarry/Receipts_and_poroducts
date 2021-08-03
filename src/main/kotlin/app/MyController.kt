@@ -9,7 +9,7 @@ import tornadofx.Controller
 import java.io.File
 
 class MyController : Controller() {
-    var products: Products = Products()
+    private val products: Products = Products()
 
     /**
      * @param inputValue название продукта
@@ -52,11 +52,13 @@ class MyController : Controller() {
     /**
      *
      */
-    //TODO products должен быть VAL, изменить загрузку с учётом этого требования
     fun loadProductListFromJson() {
         val productListAsString = File(PRODUCT_LIST_FOR_LOAD_PATH).readText()
         val gson = Gson()
-        products = gson.fromJson(productListAsString, Products::class.java) //Products::class.java - передал тип класса
+        val loadedProducts: Products =
+            gson.fromJson(productListAsString, Products::class.java) //Products::class.java - передал тип класса
+        products.productList.clear()
+        products.productList.addAll(loadedProducts.productList)
         println("Загруженный список: " + products.productList)
 
     }
