@@ -1,35 +1,66 @@
 package app
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import constants.PRODUCT_LIST_FOR_LOAD_PATH
+import constants.PRODUCT_LIST_FOR_SAVE_PATH
 import tables.Products
 import tornadofx.Controller
+import java.io.File
 
-class MyController: Controller() {
-    val products: Products = Products()
+class MyController : Controller() {
+    var products: Products = Products()
 
     /**
-     * Демонстрационный метод
+     * @param inputValue название продукта
+     * Метод записывает продукта в products.productList
      */
-    fun writeToDb(inputValue: String) {
-        println("Writing $inputValue to database!")
-        }
-
-    fun addToList(inputValue: String){
+    //TODO переделать запись из uppercase в (помидор -> Помидор)
+    fun addToList(inputValue: String) {
         val uppercaseInputValue = inputValue.uppercase()
 
         if (findInList(uppercaseInputValue))
             println("Список уже содержит $uppercaseInputValue!")
-        else{
+        else {
             products.productList.add(uppercaseInputValue)
             println("Adding $inputValue to list!")
             println("new list contains: ${products.productList}")
         }
     }
 
-    private fun findInList(inputValue: String): Boolean{
+    /**
+     * @param inputValue - название продукта
+     * @return результат поиска true или false
+     * Метод проверяет наличие дубликата в product.productList
+     */
+    private fun findInList(inputValue: String): Boolean {
         println("Finding $inputValue in the list!")
         return inputValue in products.productList
     }
 
+    /**
+     * Метод сохраняет список productList в json файл
+     */
+    fun saveProductListAsJson() {
+        val productList = products
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val jsonProductList: String = gsonPretty.toJson(productList)
+        File(PRODUCT_LIST_FOR_SAVE_PATH).writeText(jsonProductList)
+        println("Список продуктов сохранён")
+    }
+
+    /**
+     *
+     */
+    //TODO products должен быть VAL, изменить загрузку с учётом этого требования
+    fun loadProductListFromJson() {
+        val productListAsString = File(PRODUCT_LIST_FOR_LOAD_PATH).readText()
+        val gson = Gson()
+        products = gson.fromJson(productListAsString, Products::class.java) //Products::class.java - передал тип класса
+        println("Загруженный список: " + products.productList)
+
+    }
+    //TODO написать метод удаляющий продукт из списка
     /*fun removeFromList(inputValue: String) {
         println("Removing $inputValue from list!")
 

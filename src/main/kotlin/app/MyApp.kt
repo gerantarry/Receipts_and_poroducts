@@ -21,13 +21,6 @@ class TopView : View() {
             field("Input") {
                 textfield(input)
             }
-
-            button("Commit") {
-                action {
-                    controller.writeToDb(input.value)
-                    input.value = ""
-                }
-            }
             button("Добавить продукт") {
                 action {
                     try {
@@ -41,6 +34,16 @@ class TopView : View() {
             button("Open window") {
                 action {
                     openInternalWindow<MyFragment>()
+                }
+            }
+            button("Сохранить список продуктов") {
+                action {
+                    controller.saveProductListAsJson()
+                }
+            }
+            button("Загрузить список продуктов") {
+                action {
+                    controller.loadProductListFromJson()
                 }
             }
         }
