@@ -24,7 +24,7 @@ class TopView : View() {
             button("Добавить продукт") {
                 action {
                     try {
-                        controller.addToList(input.value)
+                        controller.addProductToList(input.value)
                     } catch (e: NullPointerException) {
                         println("Ошибка, null не допустим при вводе!")
                     }
@@ -44,6 +44,16 @@ class TopView : View() {
             button("Загрузить список продуктов") {
                 action {
                     controller.loadProductListFromJson()
+                }
+            }
+            button("Удалить продукт") {
+                action {
+                    try {
+                        controller.removeProductFromList(input.value)
+                    } catch (e: NullPointerException) {
+                        println("Ошибка, null не допустим при вводе!")
+                    }
+                    input.value = null
                 }
             }
         }
