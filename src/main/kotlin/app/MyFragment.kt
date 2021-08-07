@@ -1,13 +1,11 @@
 package app
 
 import tornadofx.Fragment
-import tornadofx.button
-import tornadofx.label
-import tornadofx.vbox
+import tornadofx.hbox
 
 class MyFragment: Fragment() {
-        override val root = vbox {
-            label("Save product list")
-                button("save now!") {  }
+
+        override val root = hbox{
+
         }
     }

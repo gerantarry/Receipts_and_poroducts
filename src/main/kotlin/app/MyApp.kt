@@ -12,7 +12,8 @@ class MyView : View() {
     }
 }
 
-class TopView : View() {
+class TopView() : View() {
+    //TODO реализовать инициализацию controller при отображении экрана
     private val controller: MyController by inject()
     private val input = SimpleStringProperty()
 
@@ -31,21 +32,21 @@ class TopView : View() {
                         input.value = null
                 }
             }
-            button("Open window") {
+            /*button("Open window") {
                 action {
                     openInternalWindow<MyFragment>()
                 }
-            }
+            }*/
             button("Сохранить список продуктов") {
                 action {
                     controller.saveProductListAsJson()
                 }
             }
-            button("Загрузить список продуктов") {
+            /*button("Загрузить список продуктов") {
                 action {
                     controller.loadProductListFromJson()
                 }
-            }
+            }*/
             button("Удалить продукт") {
                 action {
                     try {
