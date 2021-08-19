@@ -12,9 +12,12 @@ class MyView : View() {
     }
 }
 
-class TopView() : View() {
+class TopView : View() {
     //TODO реализовать инициализацию controller при отображении экрана
     private val controller: MyController by inject()
+    init {
+        controller.loadProductListFromJson()
+    }
     private val input = SimpleStringProperty()
 
     override val root = form {
@@ -42,11 +45,11 @@ class TopView() : View() {
                     controller.saveProductListAsJson()
                 }
             }
-            /*button("Загрузить список продуктов") {
+            button("Загрузить список продуктов") {
                 action {
                     controller.loadProductListFromJson()
                 }
-            }*/
+            }
             button("Удалить продукт") {
                 action {
                     try {
@@ -60,4 +63,3 @@ class TopView() : View() {
         }
     }
 }
-

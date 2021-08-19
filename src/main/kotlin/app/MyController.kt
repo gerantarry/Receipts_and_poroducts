@@ -12,11 +12,7 @@ import java.io.File
 
 class MyController : Controller() {
 
-    init {
-        loadProductListFromJson()
-    }
-
-    private val productList = mutableListOf<Products>()
+private val productList = mutableListOf<Products>()
 
     /**
      * @param productName название продукта
@@ -59,11 +55,11 @@ class MyController : Controller() {
      * Метод загружает данные из json в класс, тип которого передали
      * Products::class.java - передаёт тип класса
      */
-    private fun loadProductListFromJson() {
+     fun loadProductListFromJson() {
         val productListAsString = File(PRODUCT_LIST_FOR_LOAD_PATH).readText()
         val gson = Gson()
-        val loadedProducts: Products =
-            gson.fromJson(productListAsString, Products::class.java)
+        val loadedProducts =
+            gson.fromJson(productListAsString, ) //берётся лишь 1 объект из json, а должны ВСЕ
         productList.clear()
         productList.addAll(mutableListOf(loadedProducts))
         println("Загруженный список: $productList")
