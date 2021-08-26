@@ -5,6 +5,7 @@ import com.beust.klaxon.Klaxon
 import com.google.gson.GsonBuilder
 import constants.PRODUCT_LIST_FOR_LOAD_PATH
 import constants.PRODUCT_LIST_FOR_SAVE_PATH
+import extendtions.removeProductByName
 import extendtions.searchProductByName
 import extendtions.upFirstChar
 import tables.Products
@@ -22,9 +23,9 @@ companion object{
      * @param productName название продукта
      * Метод записывает продукта в products.productList
      */
-    fun addProductToList(productName: String) {
+    fun addProductToList(productName: String, coast:Int) {
         val formatProductName = productName.upFirstChar()
-        val nextProduct = Products(formatProductName)
+        val nextProduct = Products(formatProductName, coast)
 
         if (findProductInList(formatProductName))
             println("Список уже содержит $formatProductName!")
@@ -81,7 +82,7 @@ companion object{
         val formatProductName = productName.upFirstChar()
         if (findProductInList(formatProductName))
         {
-            productList.remove(Products(formatProductName))
+            productList.removeProductByName(formatProductName)
         println("Removing $formatProductName from list!\n new list: $productList")
         }
         else println("Список не содержит $formatProductName")

@@ -1,5 +1,6 @@
 package app
 
+import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.*
 
@@ -14,24 +15,31 @@ class MyView : View() {
 
 class TopView : View() {
     private val controller: MyController by inject()
+
     init {
         controller.loadProductListFromJson()
     }
-    private val input = SimpleStringProperty()
+
+    private val input_name = SimpleStringProperty()
+    private val input_coast = SimpleIntegerProperty()
 
     override val root = form {
         fieldset {
-            field("Input") {
-                textfield(input)
+            field("Название продукта") {
+                textfield(input_name)
+            }
+            field("Стоимость") {
+                textfield(input_coast)
             }
             button("Добавить продукт") {
                 action {
                     try {
-                        controller.addProductToList(input.value)
+                        controller.addProductToList(input_name.value, input_coast.value)
                     } catch (e: NullPointerException) {
                         println("Ошибка, null не допустим при вводе!")
                     }
-                        input.value = null
+                    input_name.value = null
+                    input_coast.value = null
                 }
             }
             button("Open window") {
@@ -52,11 +60,11 @@ class TopView : View() {
             button("Удалить продукт") {
                 action {
                     try {
-                        controller.removeProductFromList(input.value)
+                        controller.removeProductFromList(input_name.value)
                     } catch (e: NullPointerException) {
                         println("Ошибка, null не допустим при вводе!")
                     }
-                    input.value = null
+                    input_name.value = null
                 }
             }
         }
