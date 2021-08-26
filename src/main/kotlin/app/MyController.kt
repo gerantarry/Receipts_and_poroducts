@@ -1,6 +1,7 @@
 package app
 
-import com.google.gson.Gson
+import com.beust.klaxon.JsonReader
+import com.beust.klaxon.Klaxon
 import com.google.gson.GsonBuilder
 import constants.PRODUCT_LIST_FOR_LOAD_PATH
 import constants.PRODUCT_LIST_FOR_SAVE_PATH
@@ -9,6 +10,7 @@ import extendtions.upFirstChar
 import tables.Products
 import tornadofx.Controller
 import java.io.File
+import java.io.StringReader
 
 class MyController : Controller() {
 
@@ -52,18 +54,21 @@ private val productList = mutableListOf<Products>()
     }
 
     /**
-     * Метод загружает данные из json в класс, тип которого передали
-     * Products::class.java - передаёт тип класса
+     * Функция парсит json используя библиотеку Klaxon
      */
-     fun loadProductListFromJson() {
-        val productListAsString = File(PRODUCT_LIST_FOR_LOAD_PATH).readText()
-        val gson = Gson()
-        val loadedProducts =
-            gson.fromJson(productListAsString, ) //берётся лишь 1 объект из json, а должны ВСЕ
+    fun loadProductListFromJson() {
         productList.clear()
-        productList.addAll(mutableListOf(loadedProducts))
+        val productListAsString = File(PRODUCT_LIST_FOR_LOAD_PATH).readText()
+        val klaxon = Klaxon()
+        JsonReader(StringReader(productListAsString)).use{ reader ->
+            reader.beginArray {
+                while (reader.hasNext()) {
+                    val product = klaxon.parse<Products>(reader)
+                    productList.add(product!!)
+                }
+            }
+        }
         println("Загруженный список: $productList")
-
     }
 
     /**

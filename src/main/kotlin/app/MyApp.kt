@@ -13,7 +13,6 @@ class MyView : View() {
 }
 
 class TopView : View() {
-    //TODO реализовать инициализацию controller при отображении экрана
     private val controller: MyController by inject()
     init {
         controller.loadProductListFromJson()
