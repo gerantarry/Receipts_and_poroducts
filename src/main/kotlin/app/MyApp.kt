@@ -34,11 +34,11 @@ class TopView : View() {
                         input.value = null
                 }
             }
-            /*button("Open window") {
+            button("Open window") {
                 action {
                     openInternalWindow<MyFragment>()
                 }
-            }*/
+            }
             button("Сохранить список продуктов") {
                 action {
                     controller.saveProductListAsJson()

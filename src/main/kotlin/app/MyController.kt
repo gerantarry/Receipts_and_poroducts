@@ -9,12 +9,14 @@ import extendtions.searchProductByName
 import extendtions.upFirstChar
 import tables.Products
 import tornadofx.Controller
+import tornadofx.asObservable
 import java.io.File
 import java.io.StringReader
 
 class MyController : Controller() {
-
-private val productList = mutableListOf<Products>()
+companion object{
+    val productList = mutableListOf<Products>().asObservable()
+}
 
     /**
      * @param productName название продукта
