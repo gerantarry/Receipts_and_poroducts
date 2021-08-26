@@ -1,37 +1,89 @@
 package app
 
+import com.beust.klaxon.JsonReader
+import com.beust.klaxon.Klaxon
+import com.google.gson.GsonBuilder
+import constants.PRODUCT_LIST_FOR_LOAD_PATH
+import constants.PRODUCT_LIST_FOR_SAVE_PATH
+import extendtions.searchProductByName
+import extendtions.upFirstChar
 import tables.Products
 import tornadofx.Controller
+import tornadofx.asObservable
+import java.io.File
+import java.io.StringReader
 
-class MyController: Controller() {
-    val products: Products = Products()
+class MyController : Controller() {
+companion object{
+    val productList = mutableListOf<Products>().asObservable()
+}
 
     /**
-     * Демонстрационный метод
+     * @param productName название продукта
+     * Метод записывает продукта в products.productList
      */
-    fun writeToDb(inputValue: String) {
-        println("Writing $inputValue to database!")
-        }
+    fun addProductToList(productName: String) {
+        val formatProductName = productName.upFirstChar()
+        val nextProduct = Products(formatProductName)
 
-    fun addToList(inputValue: String){
-        val uppercaseInputValue = inputValue.uppercase()
-
-        if (findInList(uppercaseInputValue))
-            println("Список уже содержит $uppercaseInputValue!")
-        else{
-            products.productList.add(uppercaseInputValue)
-            println("Adding $inputValue to list!")
-            println("new list contains: ${products.productList}")
+        if (findProductInList(formatProductName))
+            println("Список уже содержит $formatProductName!")
+        else {
+            productList.add(nextProduct)
+            println("Adding $productName to list!\n new list: $productList")
         }
     }
 
-    private fun findInList(inputValue: String): Boolean{
-        println("Finding $inputValue in the list!")
-        return inputValue in products.productList
+    /**
+     * @param productName - название продукта
+     * @return результат поиска true или false
+     * Метод проверяет наличие дубликата в product.productList
+     */
+    private fun findProductInList(productName: String): Boolean {
+        println("Finding $productName in the list!")
+        return productList.searchProductByName(productName)
+    //productList.contains(Products(productName))
     }
 
-    /*fun removeFromList(inputValue: String) {
-        println("Removing $inputValue from list!")
+    /**
+     * Метод сохраняет список productList в json файл
+     */
+    fun saveProductListAsJson() {
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val jsonProductList: String = gsonPretty.toJson(productList)
+        File(PRODUCT_LIST_FOR_SAVE_PATH).writeText(jsonProductList)
+        println("Список продуктов сохранён")
+    }
 
-    }*/
+    /**
+     * Функция парсит json используя библиотеку Klaxon
+     */
+    fun loadProductListFromJson() {
+        productList.clear()
+        val productListAsString = File(PRODUCT_LIST_FOR_LOAD_PATH).readText()
+        val klaxon = Klaxon()
+        JsonReader(StringReader(productListAsString)).use{ reader ->
+            reader.beginArray {
+                while (reader.hasNext()) {
+                    val product = klaxon.parse<Products>(reader)
+                    productList.add(product!!)
+                }
+            }
+        }
+        println("Загруженный список: $productList")
+    }
+
+    /**
+     * @param productName - название продукта
+     * Метод удаляет продукт из списка
+     */
+    fun removeProductFromList(productName: String) {
+        val formatProductName = productName.upFirstChar()
+        if (findProductInList(formatProductName))
+        {
+            productList.remove(Products(formatProductName))
+        println("Removing $formatProductName from list!\n new list: $productList")
+        }
+        else println("Список не содержит $formatProductName")
+    }
     }

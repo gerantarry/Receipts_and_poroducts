@@ -1,13 +1,17 @@
 package app
 
+import javafx.collections.ObservableList
+import tables.Products
 import tornadofx.Fragment
-import tornadofx.button
-import tornadofx.label
-import tornadofx.vbox
+import tornadofx.readonlyColumn
+import tornadofx.tableview
 
 class MyFragment: Fragment() {
-        override val root = vbox {
-            label("Save product list")
-                button("save now!") {  }
-        }
+    //Делегирую локальные переменные значениями объекта
+    private val productList1: ObservableList<Products> by MyController.Companion::productList
+
+    override val root = tableview(productList1){
+        readonlyColumn("Продукт", Products::name)
+
     }
+}

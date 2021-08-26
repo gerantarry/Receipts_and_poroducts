@@ -13,25 +13,21 @@ class MyView : View() {
 }
 
 class TopView : View() {
-    val controller: MyController by inject()
-    val input = SimpleStringProperty()
+    private val controller: MyController by inject()
+    init {
+        controller.loadProductListFromJson()
+    }
+    private val input = SimpleStringProperty()
 
     override val root = form {
         fieldset {
             field("Input") {
                 textfield(input)
             }
-
-            button("Commit") {
-                action {
-                    controller.writeToDb(input.value)
-                    input.value = ""
-                }
-            }
             button("Добавить продукт") {
                 action {
                     try {
-                        controller.addToList(input.value)
+                        controller.addProductToList(input.value)
                     } catch (e: NullPointerException) {
                         println("Ошибка, null не допустим при вводе!")
                     }
@@ -43,7 +39,26 @@ class TopView : View() {
                     openInternalWindow<MyFragment>()
                 }
             }
+            button("Сохранить список продуктов") {
+                action {
+                    controller.saveProductListAsJson()
+                }
+            }
+            button("Загрузить список продуктов") {
+                action {
+                    controller.loadProductListFromJson()
+                }
+            }
+            button("Удалить продукт") {
+                action {
+                    try {
+                        controller.removeProductFromList(input.value)
+                    } catch (e: NullPointerException) {
+                        println("Ошибка, null не допустим при вводе!")
+                    }
+                    input.value = null
+                }
+            }
         }
     }
 }
-
