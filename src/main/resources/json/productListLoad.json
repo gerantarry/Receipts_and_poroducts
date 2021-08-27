@@ -1,10 +1,12 @@
 [
     {
         "name": "Помидоры",
-        "coast": 56
+        "coast": 56,
+        "kiloCalories": 10
     },
     {
         "name": "Огурцы",
-        "coast": 43
+        "coast": 43,
+        "kiloCalories": 8
     }
 ]

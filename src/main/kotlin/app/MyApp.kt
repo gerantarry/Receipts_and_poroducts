@@ -20,26 +20,31 @@ class TopView : View() {
         controller.loadProductListFromJson()
     }
 
-    private val input_name = SimpleStringProperty()
-    private val input_coast = SimpleIntegerProperty()
+    private val inputName = SimpleStringProperty()
+    private val inputCoast = SimpleIntegerProperty()
+    private val inputKiloCalories = SimpleIntegerProperty()
 
     override val root = form {
         fieldset {
             field("Название продукта") {
-                textfield(input_name)
+                textfield(inputName)
             }
             field("Стоимость") {
-                textfield(input_coast)
+                textfield(inputCoast)
+            }
+            field("ккалории") {
+                textfield(inputKiloCalories)
             }
             button("Добавить продукт") {
                 action {
                     try {
-                        controller.addProductToList(input_name.value, input_coast.value)
+                        controller.addProductToList(inputName.value, inputCoast.value, inputKiloCalories.value)
                     } catch (e: NullPointerException) {
                         println("Ошибка, null не допустим при вводе!")
                     }
-                    input_name.value = null
-                    input_coast.value = null
+                    inputName.value = null
+                    inputCoast.value = null
+                    inputKiloCalories.value = null
                 }
             }
             button("Open window") {
@@ -60,11 +65,11 @@ class TopView : View() {
             button("Удалить продукт") {
                 action {
                     try {
-                        controller.removeProductFromList(input_name.value)
+                        controller.removeProductFromList(inputName.value)
                     } catch (e: NullPointerException) {
                         println("Ошибка, null не допустим при вводе!")
                     }
-                    input_name.value = null
+                    inputName.value = null
                 }
             }
         }

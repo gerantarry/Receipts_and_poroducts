@@ -13,6 +13,8 @@ class MyFragment: Fragment() {
     override val root = tableview(productList1){
         readonlyColumn("Продукт", Products::name)
         readonlyColumn("Стоимость", Products::coast)
+        readonlyColumn("ккалории", Products::kiloCalories)
+
 
     }
 }

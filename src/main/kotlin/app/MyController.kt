@@ -23,9 +23,9 @@ companion object{
      * @param productName название продукта
      * Метод записывает продукта в products.productList
      */
-    fun addProductToList(productName: String, coast:Int) {
+    fun addProductToList(productName: String, coast:Int, kiloCalories:Int) {
         val formatProductName = productName.upFirstChar()
-        val nextProduct = Products(formatProductName, coast)
+        val nextProduct = Products(formatProductName, coast, kiloCalories)
 
         if (findProductInList(formatProductName))
             println("Список уже содержит $formatProductName!")
