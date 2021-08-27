@@ -2,16 +2,29 @@
   {
     "name": "Помидоры",
     "coast": 56,
-    "kiloCalories": 10
+    "kiloCalories": 10,
+    "propertyName$delegate": {
+      "fxProperty": {}
+    },
+    "propertyCoast$delegate": {
+      "fxProperty": {}
+    },
+    "propertyKiloCalories$delegate": {
+      "fxProperty": {}
+    }
   },
   {
     "name": "Огурцы",
     "coast": 43,
-    "kiloCalories": 8
-  },
-  {
-    "name": "Яйцо",
-    "coast": 6,
-    "kiloCalories": 12
+    "kiloCalories": 8,
+    "propertyName$delegate": {
+      "fxProperty": {}
+    },
+    "propertyCoast$delegate": {
+      "fxProperty": {}
+    },
+    "propertyKiloCalories$delegate": {
+      "fxProperty": {}
+    }
   }
 ]
