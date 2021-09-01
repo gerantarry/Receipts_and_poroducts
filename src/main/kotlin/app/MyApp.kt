@@ -32,7 +32,7 @@ class TopView : View() {
             field("Стоимость") {
                 textfield(inputCoast)
             }
-            field("ккалории") {
+            field("кКал") {
                 textfield(inputKiloCalories)
             }
             button("Добавить продукт") {
