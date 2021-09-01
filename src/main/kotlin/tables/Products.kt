@@ -6,7 +6,7 @@ import tornadofx.property
 /**
  * Класс содержащий список из продуктов
  */
-data class Products(var name:String, var coast:Int, var kiloCalories:Int) {
+data class Products(override var name:String, var coast:Int, var kiloCalories:Int):Receiptables {
 
     var propertyName by property(name)
     fun nameProperty() = getProperty(Products::propertyName)
