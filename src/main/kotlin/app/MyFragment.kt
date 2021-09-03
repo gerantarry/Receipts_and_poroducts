@@ -9,7 +9,7 @@ import tornadofx.tableview
 
 class MyFragment: Fragment() {
     //Делегирую локальные переменные значениями объекта
-    private val productList1: ObservableList<Products> by MyController.Companion::productList
+    private val productList1: ObservableList<Products> by MyController.Creator::productList
 
     /*override val root = tableview(productList1){
         readonlyColumn("Продукт", Products::name)

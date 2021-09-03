@@ -18,7 +18,7 @@ import java.io.StringReader
 
 class MyController : Controller() {
   //  val receipt: MutableList<Products>
-companion object{
+companion object Creator{
       val productList = mutableListOf<Products>().asObservable()
       val receiptsList = mutableListOf<Receipt>().asObservable()
 }
