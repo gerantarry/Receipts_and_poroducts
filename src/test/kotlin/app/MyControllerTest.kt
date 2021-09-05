@@ -77,6 +77,7 @@ class MyControllerTest{
     }
 
     @Test // проверка добавления продукта в рецепт
+    //Шаги : загружает список продуктов, создает рецепт, добавляет продукт в рецепт
     fun addProductToReceipt(){
         loadProductFromJson()
         createReceiptTest()
@@ -104,6 +105,17 @@ class MyControllerTest{
             .count{it.key == MyController.productList.getFromListByName("помидор") })
     }
 
+    @Test
+    fun saveReceiptListTest(){
+        addProductToReceipt()
+        controller.saveReceiptListAsJson()
+        assertTrue(true)
+    }
 
-
+    @Test // проверка загрузки продуктов в общий продукт лист
+    fun loadReceiptsFromJson(){
+        controller.loadReceiptListFromJson()
+        assertNotNull(MyController.receiptsList)
+        assertTrue(MyController.receiptsList.size == 1)
+    }
 }

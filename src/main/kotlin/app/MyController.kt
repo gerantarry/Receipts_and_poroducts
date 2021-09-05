@@ -5,6 +5,8 @@ import com.beust.klaxon.Klaxon
 import com.google.gson.GsonBuilder
 import constants.PRODUCT_LIST_FOR_LOAD_PATH
 import constants.PRODUCT_LIST_FOR_SAVE_PATH
+import constants.RECEIPT_LIST_FOR_LOAD_PATH
+import constants.RECEIPT_LIST_FOR_SAVE_PATH
 import extendtions.removeByName
 import extendtions.searchByName
 import extendtions.upFirstChar
@@ -100,6 +102,7 @@ companion object Creator{
         }
         else println("List don't contain $formatName")
     }
+
     //создает рецепт и помещает в список рецептов
     fun addReceiptToReceiptList(receiptName:String){
         val formatedReceiptName = receiptName.upFirstChar()
@@ -120,5 +123,27 @@ companion object Creator{
         receipt.receiptProductList.put(product,number)
         println("Product was added to receipt \"${receipt.name}\"" +
                 "${receipt.receiptProductList}")
+    }
+
+    fun saveReceiptListAsJson(){
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val jsonProductList: String = gsonPretty.toJson(receiptsList)
+        File(RECEIPT_LIST_FOR_SAVE_PATH).writeText(jsonProductList)
+        println("ReceiptList was saved")
+    }
+
+    fun loadReceiptListFromJson(){
+        receiptsList.clear()
+        val receiptListAsString = File(RECEIPT_LIST_FOR_LOAD_PATH).readText()
+        val klaxon = Klaxon()
+        JsonReader(StringReader(receiptListAsString)).use{ reader ->
+            reader.beginArray {
+                while (reader.hasNext()) {
+                    val receipt = klaxon.parse<Receipt>(reader)
+                    receiptsList.add(receipt!!)
+                }
+            }
+        }
+        println("Загруженный список: $receiptsList")
     }
     }
