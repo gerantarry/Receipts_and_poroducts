@@ -65,7 +65,7 @@ class TopView : View() {
             button("Удалить продукт") {
                 action {
                     try {
-                        controller.removeProductFromList(inputName.value)
+                        controller.removeProductFromList(inputName.value, MyController.productList)
                     } catch (e: NullPointerException) {
                         println("Ошибка, null не допустим при вводе!")
                     }

@@ -70,7 +70,7 @@ companion object Creator{
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val jsonProductList: String = gsonPretty.toJson(productList)
         File(PRODUCT_LIST_FOR_SAVE_PATH).writeText(jsonProductList)
-        println("Список продуктов сохранён")
+        println("ProductList was saved")
     }
 
     /**
@@ -95,26 +95,29 @@ companion object Creator{
      * @param productName - название продукта
      * Метод удаляет продукт из списка
      *///TODO попробовать пользоваться filter или map
-    fun removeProductFromList(productName: String) {
+    fun <E:Receiptables> removeProductFromList(productName: String, list: MutableList<E>) {
         val formatProductName = productName.upFirstChar()
-        if (findProductInList(formatProductName, productList))
+        if (findProductInList(formatProductName, list))
         {
-            productList.removeProductByName(formatProductName)
-        println("Removing $formatProductName from list!\n new list: $productList")
+            list.removeProductByName(formatProductName)
+        println("Removing $formatProductName from list!\n new list: $list")
         }
-        else println("Список не содержит $formatProductName")
+        else println("List don't contain $formatProductName")
     }
 
     fun createReceipt(receiptName:String){
         val formatedReceiptName = receiptName.upFirstChar()
         val nextReceipt = Receipt(formatedReceiptName)
         addToList(formatedReceiptName, receiptsList, nextReceipt)
+        println("Receipt \"$formatedReceiptName\" was create and added to receiptList")
     }
 
-    fun addProductToReceipt(receipt: Receipt, product: Products, number:Int){
+    fun addProductToReceipt(receiptName: String, product: Products, number:Int){
+        val receipt = receiptsList.asSequence() //фильтрации по имени
+            .filter { it.name == receiptName }
+            .toMutableList()[0] // возвращает единственное найденной значение
         receipt.productList.put(product,number)
-
-
-
+        println("Product was added to receipt \"${receipt.name}\"" +
+                "${receipt.productList}")
     }
     }

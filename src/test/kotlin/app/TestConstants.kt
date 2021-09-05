@@ -1,6 +1,7 @@
 package app
 
-val productName_1 = "Сыр"
-val productName_2 = "сыР"
-val coast = 500
-val kiloCalories = 877
+const val productName_1 = "Сыр"
+const val productName_2 = "сыР"
+const val receiptName_1 = "пиРог"
+const val coast = 500
+const val kiloCalories = 877

@@ -1,6 +1,5 @@
 package extendtions
 
-import tables.Products
 import tables.Receiptables
 
 /**
@@ -23,7 +22,7 @@ fun <E:Receiptables> MutableList<E>.searchByName(name:String): Boolean{
  * метод-расширение ищет запись по имени продукта
  * при нахождении записывает индекс и удаляет запись по индексу
  */
-fun MutableList<Products>.removeProductByName(productName: String) {
+fun<E:Receiptables> MutableList<E>.removeProductByName(productName: String) {
     var index = 1000
     this.forEach {
         if (it.name == productName)
