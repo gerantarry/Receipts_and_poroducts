@@ -17,12 +17,17 @@ fun <E:Receiptables> MutableList<E>.searchByName(name:String): Boolean{
      }*/
    return this.any { it.name == name }
 }
+//возвращает ненулл значение из списка найденное по имени
+fun <E : Receiptables> MutableList<E>.getFromListByName(name: String): E {
+    val formatName = name.upFirstChar()
+    return find { it.name == formatName }!!
+}
 
 /**
  * метод-расширение ищет запись по имени продукта
  * при нахождении записывает индекс и удаляет запись по индексу
  */
-fun<E:Receiptables> MutableList<E>.removeProductByName(productName: String) {
+fun<E:Receiptables> MutableList<E>.removeByName(productName: String) {
     var index = 1000
     this.forEach {
         if (it.name == productName)

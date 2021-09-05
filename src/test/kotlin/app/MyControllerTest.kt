@@ -1,5 +1,6 @@
 package app
 
+import extendtions.getFromListByName
 import extendtions.upFirstChar
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -25,7 +26,7 @@ class MyControllerTest{
     }
 
 
-    @Test()
+    @Test()//проверка добавления продукта в список продуктов
     fun simpleAddingProductTest(){
         controller.addProductToList(productName_1, coast, kiloCalories)
         assertTrue(MyController.productList.any {
@@ -34,28 +35,28 @@ class MyControllerTest{
                     && it.kiloCalories==kiloCalories })
     }
 
-    @Test
+    @Test//проверка поиска дубликатов в общем списке продуктов
     fun findingDublicateInProductListTest(){
         controller.addProductToList(productName_1, coast, kiloCalories)
         controller.addProductToList(productName_2,coast,kiloCalories)
         assertTrue("",MyController.productList.size == 1)
     }
 
-    @Test
+    @Test // проверка удаления продукта из общего продуктлиста
     fun removeFromProductListTest(){
         controller.addProductToList(productName_1, coast, kiloCalories)
-        controller.removeProductFromList(productName_2, MyController.productList)
+        controller.removeProductFromList(productName_2)
         assertEquals("Размер не 0! Ошибка",0,MyController.productList.size)
     }
 
-    @Test
+    @Test//проверка перехвата ошибки при указании отсутствующего продукта
     fun removeFromProductList_notFoundTest(){
         controller.addProductToList(productName_1, coast, kiloCalories)
-        controller.removeProductFromList("IsR", MyController.productList)
+        controller.removeProductFromList("IsR")
         assertEquals("Размер не 1! Ошибка",1,MyController.productList.size)
     }
 
-    @Test
+    @Test // проверка загрузки продуктов в общий продукт лист
     fun loadProductFromJson(){
         controller.loadProductListFromJson()
         assertNotNull(MyController.productList)
@@ -68,14 +69,14 @@ class MyControllerTest{
         controller.saveProductListAsJson()
 
     }*/
-    @Test
+    @Test // проверка создания рецепта
     fun createReceiptTest(){
-        controller.createReceipt(receiptName_1)
+        controller.addReceiptToReceiptList(receiptName_1)
         assertTrue(MyController.receiptsList.size == 1
                 && MyController.receiptsList.any { it.name == receiptName_1.upFirstChar() })
     }
 
-    @Test
+    @Test // проверка добавления продукта в рецепт
     fun addProductToReceipt(){
         loadProductFromJson()
         createReceiptTest()
@@ -83,7 +84,24 @@ class MyControllerTest{
         controller.addProductToReceipt(receiptName_1.upFirstChar(), neededProduct!!,2)
         assertEquals("Ошибка записи продукта в рецепт",
             2,
-            MyController.receiptsList[0].productList[neededProduct])//сравниваем наличие продукта в рецепте и его кол-во
+            MyController.receiptsList[0].receiptProductList[neededProduct])//сравниваем наличие продукта в рецепте и его кол-во
+    }
+
+    @Test // проверка удаления рецепта из списка рецептов
+    fun removeReceiptFromReceiptListTest(){
+        createReceiptTest()
+        controller.removeReceiptFromList(receiptName_1)
+        assertTrue(MyController.receiptsList.size == 0)
+    }
+
+    @Test // проверка удаления продукта в рецепте
+    fun removeProductFromReceiptTest(){
+        addProductToReceipt()
+        val receipt = MyController.receiptsList[0]
+        receipt.remove("Помидоры")
+        assertEquals(0,
+        receipt.receiptProductList
+            .count{it.key == MyController.productList.getFromListByName("помидор") })
     }
 
 

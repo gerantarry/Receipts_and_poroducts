@@ -5,7 +5,7 @@ import com.beust.klaxon.Klaxon
 import com.google.gson.GsonBuilder
 import constants.PRODUCT_LIST_FOR_LOAD_PATH
 import constants.PRODUCT_LIST_FOR_SAVE_PATH
-import extendtions.removeProductByName
+import extendtions.removeByName
 import extendtions.searchByName
 import extendtions.upFirstChar
 import tables.Products
@@ -31,17 +31,14 @@ companion object Creator{
         val formatProductName = productName.upFirstChar()
         val nextProduct = Products(formatProductName, coast, kiloCalories)
         addToList(formatProductName, productList, nextProduct)
+    }
 
-        /*if (findProductInList(formatProductName, productList))
-            println("Список уже содержит $formatProductName!")
-        else {
-            productList.add(nextProduct)
-            println("Adding $productName to list!\n new list: $productList")
-        }*/
+    fun removeProductFromList(productName: String){
+        removeFromList(productName, productList)
     }
 
     private fun <E:Receiptables> addToList(name:String, list:MutableList<E>, nextReceiptables: E){
-        if (findProductInList(name, list))
+        if (findInList(name, list))
             println("Список уже содержит $name!")
         else {
             list.add(nextReceiptables)
@@ -54,13 +51,12 @@ companion object Creator{
      * @param name - название продукта
      * @param list - список в котором осуществляется поиск
      * @return результат поиска true или false
-     * Метод проверяет наличие дубликата в product.productList
+     * Метод проверяет наличие дубликата перед добавлением и удалением
      */
     //TODO searchProductByName должен рабоать с наследникмаи Receiptables
-    private fun <E:Receiptables> findProductInList(name: String, list:MutableList<E>): Boolean {
+    private fun <E:Receiptables> findInList(name: String, list:MutableList<E>): Boolean {
         println("Finding $name in the list!")
         return list.searchByName(name)
-    //productList.contains(Products(productName))
     }
 
     /**
@@ -92,32 +88,37 @@ companion object Creator{
     }
 
     /**
-     * @param productName - название продукта
-     * Метод удаляет продукт из списка
+     * @param removeName - название продукта
+     * Метод удаляет из переданного списка элемент
      *///TODO попробовать пользоваться filter или map
-    fun <E:Receiptables> removeProductFromList(productName: String, list: MutableList<E>) {
-        val formatProductName = productName.upFirstChar()
-        if (findProductInList(formatProductName, list))
+   private fun <E:Receiptables> removeFromList(removeName: String, list: MutableList<E>) {
+        val formatName = removeName.upFirstChar()
+        if (findInList(formatName, list))
         {
-            list.removeProductByName(formatProductName)
-        println("Removing $formatProductName from list!\n new list: $list")
+            list.removeByName(formatName)
+        println("Removing $formatName from list!\n new list: $list")
         }
-        else println("List don't contain $formatProductName")
+        else println("List don't contain $formatName")
     }
-
-    fun createReceipt(receiptName:String){
+    //создает рецепт и помещает в список рецептов
+    fun addReceiptToReceiptList(receiptName:String){
         val formatedReceiptName = receiptName.upFirstChar()
         val nextReceipt = Receipt(formatedReceiptName)
         addToList(formatedReceiptName, receiptsList, nextReceipt)
         println("Receipt \"$formatedReceiptName\" was create and added to receiptList")
     }
 
+    fun removeReceiptFromList(removeName: String){
+        removeFromList(removeName, receiptsList)
+    }
+    //ВОЗМОЖНО ПЕРЕНУСУ В RECEIPT
+    //добавляет продукт из общего списка продуктов в список продуктов рецепта
     fun addProductToReceipt(receiptName: String, product: Products, number:Int){
         val receipt = receiptsList.asSequence() //фильтрации по имени
             .filter { it.name == receiptName }
             .toMutableList()[0] // возвращает единственное найденной значение
-        receipt.productList.put(product,number)
+        receipt.receiptProductList.put(product,number)
         println("Product was added to receipt \"${receipt.name}\"" +
-                "${receipt.productList}")
+                "${receipt.receiptProductList}")
     }
     }
