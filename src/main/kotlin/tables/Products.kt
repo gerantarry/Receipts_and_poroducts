@@ -1,19 +1,20 @@
 package tables
 
-import tornadofx.getProperty
-import tornadofx.property
+import javafx.beans.property.SimpleIntegerProperty
+import javafx.beans.property.SimpleStringProperty
+import tornadofx.getValue
+import tornadofx.setValue
 
 /**
  * Класс содержащий список из продуктов
  */
-data class Products(override var name:String, var coast:Int, var kiloCalories:Int):Receiptables {
+class Products( name:String? = null, coast:Int=0, kiloCalories:Int=0):Receiptables {
+    val nameProperty = SimpleStringProperty(this, "name", name)
+   override var name: String by nameProperty
 
-    var propertyName by property(name)
-    fun nameProperty() = getProperty(Products::propertyName)
+    val coastProperty = SimpleIntegerProperty(this, "coast", coast)
+    var coast by coastProperty
 
-    var propertyCoast by property(coast)
-    fun CoastProperty() = getProperty(Products::propertyCoast)
-
-    var propertyKiloCalories by property(kiloCalories)
-    fun kiloCaloriesProperty() = getProperty(Products::propertyKiloCalories)
+    val kiloCaloriesProperty = SimpleIntegerProperty(this, "kiloCalories", kiloCalories)
+    var kiloCalories by kiloCaloriesProperty
 }

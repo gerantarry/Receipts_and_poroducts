@@ -70,6 +70,15 @@ companion object Creator{
         File(PRODUCT_LIST_FOR_SAVE_PATH).writeText(jsonProductList)
         println("ProductList was saved")
     }
+    fun saveProductListAsJsonKlaxon(){
+        val klaxon = Klaxon()
+        val jsonString = klaxon.toJsonString(productList)
+        File(PRODUCT_LIST_FOR_SAVE_PATH).writeText(jsonString)
+        println("ProductList was saved")
+        /*val gson = GsonBuilder()
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val jsonString = gsonPretty.toJson(productList)*/
+    }
 
     /**
      * Функция парсит json используя библиотеку Klaxon

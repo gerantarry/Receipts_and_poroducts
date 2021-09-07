@@ -2,6 +2,7 @@ package app
 
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleStringProperty
+import tables.editor.ProductsEditor
 import tornadofx.*
 
 
@@ -25,6 +26,7 @@ class TopView : View() {
     private val inputKiloCalories = SimpleIntegerProperty()
 
     override val root = form {
+        autosize()
         fieldset {
             field("Название продукта") {
                 textfield(inputName)
@@ -49,12 +51,12 @@ class TopView : View() {
             }
             button("Open window") {
                 action {
-                    openInternalWindow<MyFragment>()
+                    openInternalWindow<ProductsEditor>()
                 }
             }
             button("Сохранить список продуктов") {
                 action {
-                    controller.saveProductListAsJson()
+                    controller.saveProductListAsJsonKlaxon()
                 }
             }
             button("Загрузить список продуктов") {
