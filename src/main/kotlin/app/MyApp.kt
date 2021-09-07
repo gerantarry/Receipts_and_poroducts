@@ -1,5 +1,6 @@
 package app
 
+import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.*
 
@@ -14,24 +15,36 @@ class MyView : View() {
 
 class TopView : View() {
     private val controller: MyController by inject()
+
     init {
         controller.loadProductListFromJson()
     }
-    private val input = SimpleStringProperty()
+
+    private val inputName = SimpleStringProperty()
+    private val inputCoast = SimpleIntegerProperty()
+    private val inputKiloCalories = SimpleIntegerProperty()
 
     override val root = form {
         fieldset {
-            field("Input") {
-                textfield(input)
+            field("Название продукта") {
+                textfield(inputName)
+            }
+            field("Стоимость") {
+                textfield(inputCoast)
+            }
+            field("кКал") {
+                textfield(inputKiloCalories)
             }
             button("Добавить продукт") {
                 action {
                     try {
-                        controller.addProductToList(input.value)
+                        controller.addProductToList(inputName.value, inputCoast.value, inputKiloCalories.value)
                     } catch (e: NullPointerException) {
                         println("Ошибка, null не допустим при вводе!")
                     }
-                        input.value = null
+                    inputName.value = null
+                    inputCoast.value = null
+                    inputKiloCalories.value = null
                 }
             }
             button("Open window") {
@@ -52,11 +65,11 @@ class TopView : View() {
             button("Удалить продукт") {
                 action {
                     try {
-                        controller.removeProductFromList(input.value)
+                        controller.removeProductFromList(inputName.value)
                     } catch (e: NullPointerException) {
                         println("Ошибка, null не допустим при вводе!")
                     }
-                    input.value = null
+                    inputName.value = null
                 }
             }
         }

@@ -3,6 +3,6 @@ package tables
 /**
  * Класс содержащий список из рецептов
  */
-class ReceiptsList {
-    val receiptsList = mutableListOf<Receipt>()
+data class ReceiptsList(val receipt: Receipt) {
+   // val receiptsList = mutableListOf<Receipt>()
 }
