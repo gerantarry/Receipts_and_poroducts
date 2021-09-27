@@ -1,1 +1,30 @@
-[{"coast" : 56, "coastProperty" : {}, "kiloCalories" : 10, "kiloCaloriesProperty" : {}, "name" : "Помидоры", "nameProperty" : {}}, {"coast" : 43, "coastProperty" : {}, "kiloCalories" : 8, "kiloCaloriesProperty" : {}, "name" : "Огурцы", "nameProperty" : {}}, {"coast" : 0, "coastProperty" : {}, "kiloCalories" : 0, "kiloCaloriesProperty" : {}, "name" : "Я", "nameProperty" : {}}]
+[
+  {
+    "coast": 56,
+    "coastProperty": {},
+    "kiloCalories": 10,
+    "kiloCaloriesProperty": {},
+    "name": "Помидоры"
+  },
+  {
+    "coast": 43,
+    "coastProperty": {},
+    "kiloCalories": 8,
+    "kiloCaloriesProperty": {},
+    "name": "Огурцы"
+  },
+  {
+    "coast": 0,
+    "coastProperty": {},
+    "kiloCalories": 0,
+    "kiloCaloriesProperty": {},
+    "name": "Я"
+  },
+  {
+    "coast": 6,
+    "coastProperty": {},
+    "kiloCalories": 2,
+    "kiloCaloriesProperty": {},
+    "name": "Томат"
+  }
+]

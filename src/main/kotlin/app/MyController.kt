@@ -7,6 +7,7 @@ import constants.PRODUCT_LIST_FOR_LOAD_PATH
 import constants.PRODUCT_LIST_FOR_SAVE_PATH
 import constants.RECEIPT_LIST_FOR_LOAD_PATH
 import constants.RECEIPT_LIST_FOR_SAVE_PATH
+import extendtions.asString
 import extendtions.removeByName
 import extendtions.searchByName
 import extendtions.upFirstChar
@@ -95,7 +96,7 @@ companion object Creator{
                 }
             }
         }
-        println("Загруженный список: $productList")
+        println("Загруженный список:" + productList.asString())
     }
 
     /**

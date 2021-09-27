@@ -10,7 +10,7 @@ import tornadofx.*
 class ProductsEditor: View("Products Editor") {
     private val productListLink: ObservableList<Products> by MyController.Creator::productList
     override val root = BorderPane()
-    val model = ProductsModel(Products())
+    val model = ProductsModel()
 
     init {
         with(root) {
@@ -22,7 +22,7 @@ class ProductsEditor: View("Products Editor") {
 
                     // Update the person inside the view model on selection change
                     model.rebindOnChange(this) { selectedProduct ->
-                        item = selectedProduct ?: Products()
+                        item = selectedProduct
                     }
                 }
             }

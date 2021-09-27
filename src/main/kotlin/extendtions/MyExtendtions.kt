@@ -1,5 +1,6 @@
 package extendtions
 
+import tables.Products
 import tables.Receiptables
 
 /**
@@ -9,6 +10,11 @@ import tables.Receiptables
 fun String.upFirstChar(): String =
     this.lowercase().
         replaceFirstChar { it.uppercase() }
+
+fun MutableList<Products>.asString(): String{
+   return this.joinToString("\n","\n","\n",
+       transform = {Products -> Products.toString()})
+}
 
 fun <E:Receiptables> MutableList<E>.searchByName(name:String): Boolean{
     /*this.forEach {
