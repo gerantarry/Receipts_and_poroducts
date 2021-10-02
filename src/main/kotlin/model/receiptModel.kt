@@ -1,13 +1,10 @@
-package tables
-
-import app.MyController
-import extendtions.upFirstChar
+package model
 
 /**
  * Класс содержащий словарь из продуктов и их количества
  */
-data class Receipt(override var name:String):Receiptables {
-    val receiptProductList: HashMap<Products,Int> = HashMap()
+data class Receipt(var name:String){
+  /*  val receiptProductList: HashMap<Products,Int> = HashMap()
 
     fun remove(productName: String){
         val formatName:String = productName.upFirstChar()
@@ -19,9 +16,5 @@ data class Receipt(override var name:String):Receiptables {
             println("Removing error!")
         }
     }
-
-    fun add(product:Products, number:Int){
-        receiptProductList[product] = number
-    }
-
+*/
 }

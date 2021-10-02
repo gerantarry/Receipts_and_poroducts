@@ -1,26 +1,17 @@
 [
     {
         "coast": 56,
-        "coastProperty": {},
         "kiloCalories": 10,
-        "kiloCaloriesProperty": {},
-        "name": "Помидоры",
-        "nameProperty": {}
+        "name": "Помидоры"
     },
     {
         "coast": 43,
-        "coastProperty": {},
         "kiloCalories": 8,
-        "kiloCaloriesProperty": {},
-        "name": "Огурцы",
-        "nameProperty": {}
+        "name": "Огурцы"
     },
     {
         "coast": 0,
-        "coastProperty": {},
         "kiloCalories": 0,
-        "kiloCaloriesProperty": {},
-        "name": "Я",
-        "nameProperty": {}
+        "name": "Я"
     }
 ]
