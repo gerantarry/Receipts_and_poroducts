@@ -1,18 +1,18 @@
 package extendtions
 
+import model.Products
 import model.Receipt
-import tables.Products
 
 fun MutableList<Products>.asString(): String{
     return this.joinToString("\n","\n","\n",
         transform = {Products -> Products.toString()})
 }
 
-fun  MutableList<Products>.searchByName(name:String): Boolean{
+fun  MutableList<Products>.searchProductByName(name:String): Boolean{
     return this.any { it.name == name }
 }
 
-fun  MutableList<Receipt>.searchReceipt(name:String): Boolean{
+fun  MutableList<Receipt>.searchReceiptByName(name:String): Boolean{
     return this.any { it.name == name }
 }
 

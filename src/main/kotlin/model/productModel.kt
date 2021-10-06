@@ -1,21 +1,39 @@
 package model
 
+import javafx.beans.property.SimpleIntegerProperty
+import javafx.beans.property.SimpleStringProperty
 import tornadofx.ItemViewModel
-import tornadofx.getProperty
-import tornadofx.property
+import tornadofx.getValue
+import tornadofx.setValue
 
 /**
  * Класс содержащий список из продуктов
  */
-class Products(name:String, coast:Int=0, kiloCalories:Int=0) {
-    var name by property(name)
-    fun nameProperty() = getProperty(Products::name)
+class Products(name:String ="заглушка", coast:Int=0, kiloCalories:Int=0) {
 
-    var coast by property(coast)
-    fun coastProperty() = getProperty(Products::coast)
+    val nameProperty = SimpleStringProperty(this, "name", name)
+    var name: String by nameProperty
 
-    var kiloCalories by property(kiloCalories)
-    fun kiloCaloriesProperty() = getProperty(Products::kiloCalories)
+    /*var name by property(name)
+    fun nameProperty() = getProperty(Products::name)*/
+
+    val coastProperty = SimpleIntegerProperty(this, "coast", coast)
+    var coast: Int by coastProperty
+
+    /*var coast by property(coast)
+    fun coastProperty() = getProperty(Products::coast)*/
+
+    /*var kiloCalories by property(kiloCalories)
+    fun kiloCaloriesProperty() = getProperty(Products::kiloCalories)*/
+
+    val kiloCaloriesProperty = SimpleIntegerProperty(this, "kiloCalories", kiloCalories)
+    var kiloCalories: Int by kiloCaloriesProperty
+
+    class ProductsModel: ItemViewModel<Products>() {
+        val name = bind { item?.nameProperty }
+        val coast = bind { item?.coastProperty }
+        val kiloCalories = bind { item?.kiloCaloriesProperty }
+    }
 
     override fun toString(): String {
         val stringBuilder = StringBuilder()
@@ -23,14 +41,5 @@ class Products(name:String, coast:Int=0, kiloCalories:Int=0) {
             .append("Цена: $coast, ")
             .append("Калории: $kiloCalories")
         return stringBuilder.toString()
-    }
-
-    class ProductsModel(product: tables.Products): ItemViewModel<tables.Products>(product) {
-        /*val name = bind {product.nameProperty()}
-        val coast = bind {product.coastProperty()}
-        val kiloCalories = bind {product.kiloCaloriesProperty()}*/
-        val name = bind(product::nameProperty) //TODO ругается на null значение
-        val coast = bind(product::coastProperty)
-        val kiloCalories = bind(product::kiloCaloriesProperty)
     }
 }

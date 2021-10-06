@@ -7,19 +7,20 @@ import constants.PRODUCT_LIST_FOR_LOAD_PATH
 import constants.PRODUCT_LIST_FOR_SAVE_PATH
 import extendtions.asString
 import extendtions.removeByName
-import extendtions.searchByName
+import extendtions.searchProductByName
 import extendtions.upFirstChar
-import tables.Products
+import model.Products
 import tornadofx.Controller
 import tornadofx.asObservable
 import java.io.File
 import java.io.StringReader
 
-class productsController : Controller() {
-
+class ProductsController : Controller() {
     companion object Starter {
-        val productList = mutableListOf<Products>().asObservable()
     }
+
+    val productList = mutableListOf<Products>().asObservable()
+    val selectedProduct = Products.ProductsModel()
 
     /**
      * @param productName название продукта
@@ -44,7 +45,7 @@ class productsController : Controller() {
      */
     fun findInList(name: String, list: MutableList<Products>): Boolean {
         println("Finding $name in the list!")
-        return list.searchByName(name)
+        return list.searchProductByName(name)
     }
 
     /**

@@ -7,28 +7,28 @@ import com.google.gson.GsonBuilder
 import constants.RECEIPT_LIST_FOR_LOAD_PATH
 import constants.RECEIPT_LIST_FOR_SAVE_PATH
 import extendtions.removeReceiptByName
+import extendtions.searchReceiptByName
 import extendtions.upFirstChar
-import tables.Products
-import tables.Receipt
+import model.Products
+import model.Receipt
 import tornadofx.Controller
 import tornadofx.asObservable
 import java.io.File
 import java.io.StringReader
 
-class receiptController: Controller() {
+class ReceiptController: Controller() {
     companion object Starter{
         val receiptsList = mutableListOf<Receipt>().asObservable()
     }
 
     /**
      * @param name - название рецепта
-     * @param list - список в котором осуществляется поиск
      * @return результат поиска true или false
      * Метод проверяет наличие дубликата перед добавлением и удалением
      */
     private fun findInList(name: String): Boolean {
         println("Finding $name in the list!")
-        return receiptsList.searchReceipt(name)
+        return receiptsList.searchReceiptByName(name)
     }
 
     //создает рецепт и помещает в список рецептов
@@ -49,7 +49,7 @@ class receiptController: Controller() {
         val formatName = removeName.upFirstChar()
         if (findInList(formatName))
         {
-            receiptsList.removeReceiptByName()
+            receiptsList.removeReceiptByName(removeName)
             println("Removing $formatName from list!\n new list: $receiptsList")
         }
         else println("List don't contain $formatName")

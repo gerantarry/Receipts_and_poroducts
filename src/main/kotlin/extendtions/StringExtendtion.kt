@@ -5,5 +5,6 @@ package extendtions
  * Пример поМиДор -> Помидор
  */
 fun String.upFirstChar(): String =
-    this.lowercase().
-    replaceFirstChar { it.uppercase() }
+    this.toUpperCase()
+
+
