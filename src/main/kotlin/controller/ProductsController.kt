@@ -19,7 +19,9 @@ class ProductsController : Controller() {
     companion object Starter {
     }
 
-    val productList = mutableListOf<Products>().asObservable()
+    val productList = mutableListOf<Products>(
+        Products("сыр",4,6),
+        Products("qwer",7,9)).asObservable()
     val selectedProduct = Products.ProductsModel()
 
     /**

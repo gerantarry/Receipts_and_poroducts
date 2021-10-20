@@ -5,6 +5,7 @@ import tornadofx.*
 
 class ProductsEditor: View() {
     val controller: ProductsController by inject()
+
     override val root = form{
         fieldset("Информация о продукте") {
             field("Продукт") {
@@ -13,6 +14,7 @@ class ProductsEditor: View() {
             button("Сохранить"){
                 setOnAction {
                     controller.selectedProduct.commit()
+                    println(controller.productList.toString())
                 }
             }
         }
